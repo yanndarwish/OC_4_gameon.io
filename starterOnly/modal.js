@@ -65,7 +65,7 @@ function validate() {
       input.classList.add('invalid');
       valid = false;
     } else {
-      input.parentNode.querySelector('.error').classList.remove('show')
+      // input.parentNode.querySelector('.error').classList.remove('show')
       input.classList.add('valid');
     }
   })
