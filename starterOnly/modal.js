@@ -19,7 +19,6 @@ const inputs = document.querySelectorAll("input");
 const form = document.querySelector("form")
 const errors = document.querySelectorAll(".error");
 const cgu = document.getElementById("checkbox1")
-const modalBody = document.querySelector(".modal-body");
 const confirmation = document.querySelector(".confirmation");
 
 // launch modal event
@@ -34,13 +33,28 @@ function launchModal() {
 closeModalBtn.addEventListener("click", closeModal);
 closeBtn.addEventListener('click', closeModal)
 
-
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
 }
 
 // FORM VALIDATION
+const isValid = (event) => {
+  inputs.forEach((input) => {
+    // change (specific for date and radio buttons)
+    input.addEventListener(`${event}`, (e) => {
+      if (!e.target.checkValidity() || e.target.value === "") {
+        e.target.parentNode.querySelector('.error').classList.add('show')
+        input.classList.remove('valid');
+        input.classList.add('invalid');
+      } else {
+        e.target.parentNode.querySelector('.error').classList.remove('show')
+        input.classList.add('valid');
+        input.classList.remove('invalid');
+      }
+    })
+  })
+}
 
 function validate() {
   let valid = true;
@@ -51,7 +65,7 @@ function validate() {
       input.classList.add('invalid');
       valid = false;
     } else {
-      // input.parentNode.querySelector('.error').classList.remove('show')
+      input.parentNode.querySelector('.error').classList.remove('show')
       input.classList.add('valid');
     }
   })
@@ -80,37 +94,13 @@ function validate() {
 // validity check before sending form
 inputs.forEach((input) => {
   // change (specific for date and radio buttons)
-  input.addEventListener("change", (e) => {
-    if (!e.target.checkValidity() || e.target.value === "") {
-      e.target.parentNode.querySelector('.error').classList.add('show')
-      input.classList.remove('valid');
-      input.classList.add('invalid');
-    } else {
-      e.target.parentNode.querySelector('.error').classList.remove('show')
-      input.classList.add('valid');
-      input.classList.remove('invalid');
-    }
-  })
+  isValid('change');
   // keyup event (for inputs)
-  input.addEventListener("keyup", (e) => {
-    if (!e.target.checkValidity() || e.target.value === "") {
-      e.target.parentNode.querySelector('.error').classList.add('show')
-      input.classList.add('invalid');
-      input.classList.remove('valid');
-    } else {
-      e.target.parentNode.querySelector('.error').classList.remove('show')
-      input.classList.add('valid');
-      input.classList.remove('invalid');
-    }
-  })
-  
+  isValid('keyup');
 })
 
 // confirmation screen 
 form.addEventListener("submit", (e) => {
-  inputs.forEach(input => {
-    console.log(input.value)
-  })
   e.preventDefault();
   if (validate()) {
     // show confirmation screen
