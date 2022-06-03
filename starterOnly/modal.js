@@ -92,4 +92,8 @@ inputs.forEach((input) => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  if (validate()) {
+    form.style.display = "none";
+    confirmation.classList.add('show');
+  }
 })
