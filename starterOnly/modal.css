@@ -527,3 +527,24 @@ footer {
   }
 }
 
+/* my classes */
+
+.error {
+  color:#e54858;
+  font-size:14px;
+  display:none;
+}
+
+input:invalid,
+.invalid {
+  border: 2px solid #e54858;
+}
+
+.valid:not([type="submit"]) {
+  border: 2px solid #279e7a;
+}
+
+.show {
+  display:flex;
+}
+
