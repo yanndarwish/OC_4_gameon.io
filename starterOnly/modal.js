@@ -88,7 +88,13 @@ function validate() {
   if (checked === 0 || !cgu.checked) {
     valid = false;
   }
-  return valid;
+  // return valid;
+  if (valid) {
+    //     // show confirmation screen
+        form.style.display = "none";
+        confirmation.classList.add('show');
+      }
+  return false
 }
 
 // validity check before sending form
@@ -100,11 +106,11 @@ inputs.forEach((input) => {
 })
 
 // confirmation screen 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (validate()) {
-    // show confirmation screen
-    form.style.display = "none";
-    confirmation.classList.add('show');
-  }
-})
+// form.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   if (validate()) {
+//     // show confirmation screen
+//     form.style.display = "none";
+//     confirmation.classList.add('show');
+//   }
+// })
