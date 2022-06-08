@@ -27,6 +27,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+  inputs[0].focus();
 }
 
 // close modal event
@@ -39,20 +40,21 @@ function closeModal() {
 }
 
 // FORM VALIDATION
-const isValid = (event) => {
-  inputs.forEach((input) => {
-    // change (specific for date and radio buttons)
-    input.addEventListener(`${event}`, (e) => {
-      if (!e.target.checkValidity() || e.target.value === "") {
-        e.target.parentNode.querySelector('.error').classList.add('show')
+const isValid = (input, event) => {
+  input.addEventListener(`${event}`, (e) => {
+    console.log(e.target)
+    if (!e.target.checkValidity()) {
+      e.target.parentNode.querySelector('.error').classList.add('show')
+      input.classList.remove('valid');
+      input.classList.add('invalid');
+    } else {
+      e.target.parentNode.querySelector('.error').classList.remove('show')
+      input.classList.add('valid');
+      input.classList.remove('invalid');
+      if (e.target.value === "") {
         input.classList.remove('valid');
-        input.classList.add('invalid');
-      } else {
-        e.target.parentNode.querySelector('.error').classList.remove('show')
-        input.classList.add('valid');
-        input.classList.remove('invalid');
       }
-    })
+    }
   })
 }
 
@@ -88,29 +90,19 @@ function validate() {
   if (checked === 0 || !cgu.checked) {
     valid = false;
   }
-  // return valid;
+  // show confirmation screen
   if (valid) {
-    //     // show confirmation screen
-        form.style.display = "none";
-        confirmation.classList.add('show');
-      }
+      form.style.display = "none";
+      confirmation.classList.add('show');
+    }
+  // return false to prevent default behavior from form
   return false
 }
 
 // validity check before sending form
 inputs.forEach((input) => {
   // change (specific for date and radio buttons)
-  isValid('change');
-  // keyup event (for inputs)
-  isValid('keyup');
+  isValid(input, 'change');
+  // keyup event (for text inputs)
+  isValid(input, 'keyup');
 })
-
-// confirmation screen 
-// form.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   if (validate()) {
-//     // show confirmation screen
-//     form.style.display = "none";
-//     confirmation.classList.add('show');
-//   }
-// })
