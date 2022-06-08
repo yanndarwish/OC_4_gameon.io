@@ -39,10 +39,16 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
+let  mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+// \w+ means one or more (+) alphanumeric characters and underscore (w)
+// [\.-]? means zero or one occurrence of the character (\ = escape, . = . (regular dot), - = - (regular -), ? = {0,1})
+//  * means zero or more occurrences of the character {0,}
+// $ means end of string
+
+
 // FORM VALIDATION
 const isValid = (input, event) => {
   input.addEventListener(`${event}`, (e) => {
-    console.log(e.target)
     if (!e.target.checkValidity()) {
       e.target.parentNode.querySelector('.error').classList.add('show')
       input.classList.remove('valid');
@@ -53,6 +59,22 @@ const isValid = (input, event) => {
       input.classList.remove('invalid');
       if (e.target.value === "") {
         input.classList.remove('valid');
+      }
+    }
+    // email validation
+    if (e.target.type === 'email') {
+      if (e.target.value.match(mailformat)) {
+        e.target.parentNode.querySelector('.error').classList.remove('show')
+        e.target.classList.remove('invalid');
+        e.target.classList.add('valid');
+      } else {
+        e.target.parentNode.querySelector('.error').classList.add('show')
+        e.target.classList.remove('valid');
+        e.target.classList.add('invalid');
+        if (e.target.value === "") {
+          input.classList.remove('invalid');
+          e.target.parentNode.querySelector('.error').classList.remove('show')
+        }
       }
     }
   })
@@ -67,8 +89,20 @@ function validate() {
       input.classList.add('invalid');
       valid = false;
     } else {
-      // input.parentNode.querySelector('.error').classList.remove('show')
       input.classList.add('valid');
+    }
+    // email validation
+    if (input.type === 'email') {
+      if (input.value.match(mailformat)) {
+        input.parentNode.querySelector('.error').classList.remove('show')
+        // input.classList.remove('invalid');
+        input.classList.add('valid');
+      } else {
+        input.parentNode.querySelector('.error').classList.add('show')
+        input.classList.remove('valid');
+        input.classList.add('invalid');
+        valid = false;
+      }
     }
   })
   // check if one radio button is checked
