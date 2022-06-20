@@ -499,7 +499,7 @@ footer {
     white-space: normal;
   }
   .hero-text {
-    width: unset;
+    width: 90%;
     font-size: 1.5rem;
   }
   .hero-img img {
@@ -514,6 +514,12 @@ footer {
   .copyrights {
     margin-top: 50px;
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-headline {
+    font-size: 2.5rem;
   }
 }
 
